@@ -8,6 +8,7 @@
 ## Features
 - The whole app is FREE, you can add unlimited number of tasks and there are NO ADS.
 - The app is FAST so that you can run this app on any device.
+- You can add custom lists so that you can group similar tasks together.
 - The app design is simple so that anyone can use this app.
 
 ## Built With
