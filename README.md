@@ -10,6 +10,9 @@
 - The app is FAST so that you can run this app on any device.
 - The app design is simple so that anyone can use this app.
 
+## Built With
+- [Flutter](https://flutter.dev)
+
 ## Getting Started
 Prerequisites:
 - You should have [Flutter](https://flutter.dev) installed in your computer.
