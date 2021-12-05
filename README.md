@@ -1,16 +1,36 @@
-# taskflow
+<h1 align="center" style="border-bottom: none">
+    <b>
+        <a href="">TaskFlow</a><br>
+    </b>
+    ⭐️ Free & Open Source To-Do App ⭐️ <br>
+</h1>
 
-A new Flutter project.
+## Features
+- The whole app is FREE, you can add unlimited number of tasks and there are NO ADS.
+- The app is FAST so that you can run this app on any device.
+- The app design is simple so that anyone can use this app.
 
 ## Getting Started
+Prerequisites:
+- You should have [Flutter](https://flutter.dev) installed in your computer.
+- You also need to have a code editor like [Visual Studio Code](https://code.visualstudio.com).
+- Get the code,
+```js
 
-This project is a starting point for a Flutter application.
+git clone https://github.com/Imira-S-R/TaskFlow
 
-A few resources to get you started if this is your first Flutter project:
+```
+- Change Directory
+```js
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+cd TaskFlow
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+- Run the project
+```js
+
+flutter run
+
+```
+## About
+The whole app is created by Imira Randeniya. Development Process Currently Ongoing.
