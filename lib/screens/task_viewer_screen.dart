@@ -34,8 +34,8 @@ class TaskViewerScreen extends StatefulWidget {
 }
 
 class _TaskvieweVStateScreen extends State<TaskViewerScreen> {
-  late final DueDate = DateTime.parse(widget.dueDate.toString());
-  late final DueTime = TimeOfDay(
+  late final dueDate = DateTime.parse(widget.dueDate.toString());
+  late final dueTime = TimeOfDay(
       hour: int.parse(widget.dueTime!.split(":")[0]),
       minute: int.parse(widget.dueTime!.split(":")[1]));
 

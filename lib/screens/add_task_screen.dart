@@ -115,6 +115,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   TaskDatabase.instance.create(task);
                   widget.refreshTasks();
                   Navigator.pop(context);
+                  NotificationApi.showSheduleNotification(
+                      sheduledDate: DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                          selectedTime.hour,
+                          selectedTime.minute), 
+                          title: nameController.text, 
+                          body: 'You have a due task'
+                          );
                 }
               },
               icon: Icon(Icons.done))

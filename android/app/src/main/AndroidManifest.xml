@@ -2,7 +2,7 @@
     package="com.imirasr.taskflow">
    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
    <application
-        android:label="taskflow"
+        android:label="TaskFlow"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

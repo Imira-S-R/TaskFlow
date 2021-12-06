@@ -112,8 +112,53 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                // TODO: Implement Logic Here
-              }, 
+                if (nameController.text == '' && noteController.text == '') {
+                  TaskDatabase.instance.update(Task(
+                    id: widget.id!,
+                    taskName: widget.taskName!,
+                    note: widget.taskNote!,
+                    dueTime: widget.dueTime!,
+                    dueDate: widget.dueDate!,
+                    isCompleted: widget.isCompleted!,
+                    isDeleted: widget.isDeleted!,
+                    isImportant: widget.isImportant!,
+                    listName: widget.listName!,
+                  ));
+                  widget.refreshTasks();
+                  Navigator.pop(context);
+                } else if (nameController.text == '') {
+                  TaskDatabase.instance.update(Task(
+                    id: widget.id!,
+                    taskName: widget.taskName!,
+                    note: noteController.text,
+                    dueTime: widget.dueTime!,
+                    dueDate: widget.dueDate!,
+                    isCompleted: widget.isCompleted!,
+                    isDeleted: widget.isDeleted!,
+                    isImportant: widget.isImportant!,
+                    listName: widget.listName!,
+                  ));
+                  widget.refreshTasks();
+                  Navigator.pop(context);
+                } else if (noteController.text == '') {
+                   TaskDatabase.instance.update(Task(
+                    id: widget.id!,
+                    taskName: nameController.text,
+                    note: noteController.text,
+                    dueTime: widget.dueTime!,
+                    dueDate: widget.dueDate!,
+                    isCompleted: widget.isCompleted!,
+                    isDeleted: widget.isDeleted!,
+                    isImportant: widget.isImportant!,
+                    listName: widget.listName!,
+                  ));
+                  widget.refreshTasks();
+                  Navigator.pop(context);
+                }
+                widget.refreshTasks();
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
               icon: Icon(Icons.done, color: Colors.white))
         ],
         elevation: 0.0,
@@ -154,7 +199,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     ),
                     counterStyle: TextStyle(color: Colors.white),
                     prefixIcon: Icon(
-                      Icons.password_rounded,
+                      Icons.title_outlined,
                       size: 24,
                       color: Colors.white,
                     ),
@@ -195,7 +240,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     ),
                     counterStyle: TextStyle(color: Colors.white),
                     prefixIcon: Icon(
-                      Icons.password_rounded,
+                      Icons.note_outlined,
                       size: 24,
                       color: Colors.white,
                     ),
