@@ -9,6 +9,7 @@
 - The whole app is FREE, you can add unlimited number of tasks and there are NO ADS.
 - The app is FAST so that you can run this app on any device.
 - You can add custom lists so that you can group similar tasks together.
+- Sends Notification To Remind You About The Tasks You Have.
 - The app design is simple so that anyone can use this app.
 
 ## Built With
@@ -38,3 +39,9 @@ flutter run
 ```
 ## About
 The whole app is created by Imira Randeniya. Development Process Currently Ongoing.
+
+
+## License
+Copyright (c) Imira Randeniya. All rights reserved.
+
+Licensed under the [MIT License](./LICENSE).
