@@ -36,6 +36,7 @@ class _MyDayState extends State<MyDay> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Add new task',
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => AddTaskScreen(
@@ -51,6 +52,7 @@ class _MyDayState extends State<MyDay> {
       ),
       backgroundColor: Color(0xff788BFF),
       appBar: AppBar(
+        brightness: Brightness.dark,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,

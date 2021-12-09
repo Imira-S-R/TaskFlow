@@ -6,6 +6,7 @@ import 'package:taskflow/screens/all_tasks_screen.dart';
 import 'package:taskflow/screens/custom_list_screen.dart';
 import 'package:taskflow/screens/important_screen.dart';
 import 'package:taskflow/screens/my_day_screen.dart';
+import 'package:taskflow/screens/settings_screen.dart';
 import 'package:taskflow/widgets/home_screen_tile.dart';
 
 class Home extends StatefulWidget {
@@ -41,18 +42,22 @@ class _HomeState extends State<Home> {
       backgroundColor: Color(0xffF7F7F7),
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Color(0xffF7F7F7),
+        brightness: Brightness.dark,
+        backgroundColor: Colors.blue[700],
         title: Text(
           'TaskFlow',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
         actions: [
           IconButton(
               tooltip: 'Settings',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SettingsScreen()));
+              },
               icon: Icon(
                 Icons.settings_rounded,
-                color: Colors.black,
+                color: Colors.white,
               ))
         ],
       ),
@@ -67,7 +72,6 @@ class _HomeState extends State<Home> {
             text: 'My Day',
             route: MyDay(),
           ),
-          
           Container(
             width: MediaQuery.of(context).size.width - 50.0,
             child: Divider(
@@ -98,11 +102,10 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => CustomListScreen(
-                                  listName: lists[index].listName,
-                                  color: lists[index].color,
-                                  refreshLists: refreshNotes,
-                                  id: lists[index].id
-                                )));
+                                listName: lists[index].listName,
+                                color: lists[index].color,
+                                refreshLists: refreshNotes,
+                                id: lists[index].id)));
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width - 50.0,

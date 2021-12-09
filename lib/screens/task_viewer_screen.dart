@@ -61,9 +61,11 @@ class _TaskvieweVStateScreen extends State<TaskViewerScreen> {
     return Scaffold(
       backgroundColor: Color(0xff20A39E),
       appBar: AppBar(
+        brightness: Brightness.dark,
         elevation: 0.0,
         actions: [
           IconButton(
+            tooltip: 'Edit task',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => EditTaskScreen(
@@ -85,6 +87,7 @@ class _TaskvieweVStateScreen extends State<TaskViewerScreen> {
               Icons.delete_outline,
               color: Colors.white,
             ),
+            tooltip: 'Delete Task',
             onPressed: () {
               showDialog(
                 context: context,

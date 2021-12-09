@@ -27,28 +27,29 @@ class _AddCustomListState extends State<AddCustomList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff1F6F63),
         appBar: AppBar(
           actions: [
             IconButton(
+              tooltip: 'Add custom list',
                 onPressed: () {
                   if (listNameController.text.length == 0) {
-                    } else {
-                      var customList = list(
-                          listName: listNameController.text,
-                          color: selectedColor.value.toString());
-                      ListDatabase.instance.create(customList);
-                      widget.refreshLists();
-                      Navigator.pop(context);
-                    }
+                  } else {
+                    var customList = list(
+                        listName: listNameController.text,
+                        color: selectedColor.value.toString());
+                    ListDatabase.instance.create(customList);
+                    widget.refreshLists();
+                    Navigator.pop(context);
+                  }
                 },
                 icon: Icon(
                   Icons.done,
                   color: Colors.white,
                 ))
           ],
-          backgroundColor: Color(0xff1F6F63),
-          elevation: 0.0,
+          elevation: 2.0,
+          brightness: Brightness.dark,
+          backgroundColor: Colors.blue[700],
           title: Text(
             'Add Custom List',
             style: TextStyle(color: Colors.white),
@@ -65,7 +66,7 @@ class _AddCustomListState extends State<AddCustomList> {
                   height: 75.0,
                   width: MediaQuery.of(context).size.width - 40.0,
                   child: TextFormField(
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                     maxLength: 60,
                     controller: listNameController,
                     onFieldSubmitted: (value) {
@@ -73,15 +74,15 @@ class _AddCustomListState extends State<AddCustomList> {
                     },
                     decoration: InputDecoration(
                       hintText: 'List Name',
-                      hintStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.white, width: 2.0),
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide(
-                          color: Colors.white60,
+                          color: Colors.blueGrey,
                           width: 2.0,
                         ),
                       ),
@@ -89,7 +90,7 @@ class _AddCustomListState extends State<AddCustomList> {
                       prefixIcon: Icon(
                         Icons.title,
                         size: 24,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0)),
@@ -105,7 +106,7 @@ class _AddCustomListState extends State<AddCustomList> {
               padding: const EdgeInsets.only(left: 20.0),
               child: Text(
                 'Theme',
-                style: TextStyle(color: Colors.white, fontSize: 18.0),
+                style: TextStyle(color: Colors.black, fontSize: 18.0),
               ),
             ),
             SizedBox(

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:taskflow/database/custom_list_database.dart';
 import 'package:taskflow/database/task_database.dart';
+import 'package:taskflow/database/user_database.dart';
 import 'package:taskflow/model/custom_list_model.dart';
 import 'package:taskflow/model/task_model.dart';
+import 'package:taskflow/model/user_model.dart';
 import 'package:taskflow/notification_service.dart';
 import 'package:date_format/date_format.dart';
 
@@ -23,6 +25,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   late List<Task> tasks;
   late List<list> lists = [];
+  late List<User> users = [];
   bool isLoading = false;
   late String selectedList = '';
   int selectedIndex = 0;
@@ -54,6 +57,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
     this.tasks = await TaskDatabase.instance.readAllNotes();
     this.lists = await ListDatabase.instance.readAllNotes();
+    this.users = await UserDatabase.instance.readAllNotes();
 
     setState(() => isLoading = false);
   }
@@ -93,10 +97,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff1F6F63),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         actions: [
           IconButton(
+            tooltip: 'Create task',
               onPressed: () {
                 if (nameController.text.length == 0) {
                 } else {
@@ -115,7 +120,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   TaskDatabase.instance.create(task);
                   widget.refreshTasks();
                   Navigator.pop(context);
-                  NotificationApi.showSheduleNotification(
+                  if (users[0].isReminderOn) {
+                    NotificationApi.showSheduleNotification(
                       sheduledDate: DateTime(
                           selectedDate.year,
                           selectedDate.month,
@@ -125,11 +131,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           title: nameController.text, 
                           body: 'You have a due task'
                           );
+                  } else {
+                    
+                  }
                 }
               },
               icon: Icon(Icons.done))
         ],
-        brightness: Brightness.dark,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
@@ -137,8 +145,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Color(0xff1F6F63),
-        elevation: 0.0,
+        elevation: 2.0,
+        brightness: Brightness.dark,
+        backgroundColor: Colors.blue[700],
         title: Text('Add New Task', style: TextStyle(color: Colors.white)),
       ),
       body: Column(
@@ -153,7 +162,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 height: 75.0,
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                   maxLength: 60,
                   controller: nameController,
                   onFieldSubmitted: (value) {
@@ -161,23 +170,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   },
                   decoration: InputDecoration(
                     hintText: 'Task Title',
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.black),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        color: Colors.white60,
+                        color: Colors.blueGrey,
                         width: 2.0,
                       ),
                     ),
-                    counterStyle: TextStyle(color: Colors.white),
+                    counterStyle: TextStyle(color: Colors.black),
                     prefixIcon: Icon(
                       Icons.title,
                       size: 24,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0)),
@@ -196,7 +205,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 height: 75.0,
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                   maxLength: 60,
                   controller: noteController,
                   onFieldSubmitted: (value) {
@@ -204,23 +213,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   },
                   decoration: InputDecoration(
                     hintText: 'Note',
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.black),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        color: Colors.white60,
+                        color: Colors.blueGrey,
                         width: 2.0,
                       ),
                     ),
-                    counterStyle: TextStyle(color: Colors.white),
+                    counterStyle: TextStyle(color: Colors.black),
                     prefixIcon: Icon(
                       Icons.note,
                       size: 24,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0)),
@@ -235,7 +244,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           Text(
             'Remind Date',
             textAlign: TextAlign.left,
-            style: TextStyle(color: Colors.white, fontSize: 24.0),
+            style: TextStyle(color: Colors.black, fontSize: 24.0),
           ),
           GestureDetector(
             onTap: () {
@@ -245,7 +254,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               height: 50.0,
               width: MediaQuery.of(context).size.width - 50.0,
               child: TextFormField(
-                style: TextStyle(fontSize: 25.0, color: Colors.white),
+                style: TextStyle(fontSize: 25.0, color: Colors.black),
                 textAlign: TextAlign.center,
                 enabled: false,
                 keyboardType: TextInputType.text,
@@ -262,7 +271,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           Text(
             'Remind Time',
             textAlign: TextAlign.left,
-            style: TextStyle(color: Colors.white, fontSize: 24.0),
+            style: TextStyle(color: Colors.black, fontSize: 24.0),
           ),
           GestureDetector(
             onTap: () {
@@ -272,7 +281,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               height: 50.0,
               width: MediaQuery.of(context).size.width - 50.0,
               child: TextFormField(
-                style: TextStyle(fontSize: 25.0, color: Colors.white),
+                style: TextStyle(fontSize: 25.0, color: Colors.black),
                 textAlign: TextAlign.center,
                 enabled: false,
                 keyboardType: TextInputType.text,
@@ -288,9 +297,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           ),
           Text(
             'List Name',
-            style: TextStyle(color: Colors.white, fontSize: 24.0),
+            style: TextStyle(color: Colors.black, fontSize: 24.0),
           ),
-
           Expanded(
             child: Container(
               height: 50.0,
@@ -316,12 +324,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 child: Text(
                               lists[index].listName,
                               style: TextStyle(
-                                  color: Colors.white, fontSize: 16.0),
+                                  color: selectedIndex == index ? Colors.white : Colors.black, fontSize: 16.0),
                             )),
                             decoration: BoxDecoration(
                                 color: selectedIndex == index
                                     ? Colors.red
-                                    : Color(0xff1F6F63),
+                                    : Colors.white,
                                 border: selectedIndex == index
                                     ? Border.all(color: Colors.red)
                                     : Border.all(color: Colors.red),
@@ -363,7 +371,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           //           child: Text(
           //             'Create Task',
           //             style: TextStyle(
-          //                 color: Colors.white,
+          //                 color: Colors.black,
           //                 fontSize: 20.0,
           //                 fontWeight: FontWeight.bold),
           //           ),

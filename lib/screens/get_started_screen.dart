@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taskflow/database/user_database.dart';
+import 'package:taskflow/model/user_model.dart';
+import 'package:taskflow/screens/home_screen.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
@@ -83,7 +86,11 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    UserDatabase.instance.create(User(isReminderOn: false));
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => Home()));
+                  },
                   child: Container(
                     height: 50.0,
                     width: MediaQuery.of(context).size.width - 60.0,

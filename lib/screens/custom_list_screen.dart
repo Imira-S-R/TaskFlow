@@ -47,6 +47,7 @@ class _CustomListScreenState extends State<CustomListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+          tooltip: 'Add new task',
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AddTaskScreen(
@@ -61,11 +62,13 @@ class _CustomListScreenState extends State<CustomListScreen> {
         ),
         backgroundColor: Color(int.parse(widget.color!)),
         appBar: AppBar(
+          brightness: Brightness.dark,
           elevation: 0.0,
           backgroundColor: Color(int.parse(widget.color!)),
           title: Text(widget.listName!),
           actions: [
             IconButton(
+                tooltip: 'Delete list',
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -92,6 +95,11 @@ class _CustomListScreenState extends State<CustomListScreen> {
                             onPressed: () {
                               ListDatabase.instance.delete(widget.id!);
                               widget.refreshLists();
+                              for (var task in filtredTaskList) {
+                                setState(() {
+                                  TaskDatabase.instance.delete(task.id!);
+                                });
+                              }
                               Navigator.of(context).pop();
                               Navigator.pop(context);
                             },
@@ -195,12 +203,14 @@ class _CustomListScreenState extends State<CustomListScreen> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                          decoration: filtredTaskList[index].isCompleted
-                                              ? TextDecoration.lineThrough
-                                              : TextDecoration.none,
-                                          color: filtredTaskList[index].isCompleted
-                                              ? Colors.black54
-                                              : Colors.black,
+                                          decoration:
+                                              filtredTaskList[index].isCompleted
+                                                  ? TextDecoration.lineThrough
+                                                  : TextDecoration.none,
+                                          color:
+                                              filtredTaskList[index].isCompleted
+                                                  ? Colors.black54
+                                                  : Colors.black,
                                           fontSize: 19.0),
                                     )),
                                   ],

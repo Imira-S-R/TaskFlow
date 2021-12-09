@@ -42,7 +42,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   TextEditingController _timeController = TextEditingController();
   late List<Task> tasks;
   late List<list> lists = [];
-  late int selectedIndex;
+  int selectedIndex = 0;
   bool isLoading = false;
   late double _height;
   late double _width;
@@ -62,6 +62,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     _timeController.text = formatDate(
         DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
         [hh, ':', nn, " ", am]).toString();
+
+    refreshNotes();
   }
 
   Future refreshNotes() async {
@@ -107,8 +109,9 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff20A39E),
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        brightness: Brightness.dark,
         actions: [
           IconButton(
               onPressed: () {
@@ -117,12 +120,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     id: widget.id!,
                     taskName: widget.taskName!,
                     note: widget.taskNote!,
-                    dueTime: widget.dueTime!,
-                    dueDate: widget.dueDate!,
+                    dueDate: _dateController.text.toString(),
+                    dueTime: _timeController.text.toString(),
                     isCompleted: widget.isCompleted!,
                     isDeleted: widget.isDeleted!,
                     isImportant: widget.isImportant!,
-                    listName: widget.listName!,
+                    listName: lists[selectedIndex].listName,
                   ));
                   widget.refreshTasks();
                   Navigator.pop(context);
@@ -136,12 +139,26 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     isCompleted: widget.isCompleted!,
                     isDeleted: widget.isDeleted!,
                     isImportant: widget.isImportant!,
-                    listName: widget.listName!,
+                    listName: lists[selectedIndex].listName,
                   ));
                   widget.refreshTasks();
                   Navigator.pop(context);
                 } else if (noteController.text == '') {
-                   TaskDatabase.instance.update(Task(
+                  TaskDatabase.instance.update(Task(
+                    id: widget.id!,
+                    taskName: nameController.text,
+                    note: widget.taskNote,
+                    dueTime: widget.dueTime!,
+                    dueDate: widget.dueDate!,
+                    isCompleted: widget.isCompleted!,
+                    isDeleted: widget.isDeleted!,
+                    isImportant: widget.isImportant!,
+                    listName: lists[selectedIndex].listName,
+                  ));
+                  widget.refreshTasks();
+                  Navigator.pop(context);
+                } else {
+                  TaskDatabase.instance.update(Task(
                     id: widget.id!,
                     taskName: nameController.text,
                     note: noteController.text,
@@ -150,7 +167,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     isCompleted: widget.isCompleted!,
                     isDeleted: widget.isDeleted!,
                     isImportant: widget.isImportant!,
-                    listName: widget.listName!,
+                    listName: lists[selectedIndex].listName,
                   ));
                   widget.refreshTasks();
                   Navigator.pop(context);
@@ -161,17 +178,21 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
               },
               icon: Icon(Icons.done, color: Colors.white))
         ],
+        title: Text('Edit task', style: TextStyle(color: Colors.white)),
         elevation: 0.0,
+        backgroundColor: Colors.blue[700],
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white)),
-        backgroundColor: Color(0xff20A39E),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(
+            height: 10.0,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -179,7 +200,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 height: 75.0,
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                   maxLength: 60,
                   initialValue: widget.taskName,
                   onChanged: (value) {
@@ -188,12 +209,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        color: Colors.white10,
+                        color: Colors.blueGrey,
                         width: 2.0,
                       ),
                     ),
@@ -201,7 +222,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     prefixIcon: Icon(
                       Icons.title_outlined,
                       size: 24,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0)),
@@ -220,7 +241,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 height: 75.0,
                 width: MediaQuery.of(context).size.width - 40.0,
                 child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                   maxLength: 60,
                   initialValue: widget.taskNote,
                   onChanged: (value) {
@@ -229,12 +250,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        color: Colors.white10,
+                        color: Colors.blueGrey,
                         width: 2.0,
                       ),
                     ),
@@ -242,7 +263,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     prefixIcon: Icon(
                       Icons.note_outlined,
                       size: 24,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0)),
@@ -257,7 +278,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           Text(
             'Remind Date',
             textAlign: TextAlign.left,
-            style: TextStyle(color: Colors.white, fontSize: 24.0),
+            style: TextStyle(color: Colors.black, fontSize: 24.0),
           ),
           GestureDetector(
             onTap: () {
@@ -267,7 +288,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
               height: 50.0,
               width: MediaQuery.of(context).size.width - 50.0,
               child: TextFormField(
-                style: TextStyle(fontSize: 25.0, color: Colors.white),
+                style: TextStyle(fontSize: 25.0, color: Colors.black),
                 textAlign: TextAlign.center,
                 enabled: false,
                 keyboardType: TextInputType.text,
@@ -284,7 +305,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           Text(
             'Remind Time',
             textAlign: TextAlign.left,
-            style: TextStyle(color: Colors.white, fontSize: 24.0),
+            style: TextStyle(color: Colors.black, fontSize: 24.0),
           ),
           GestureDetector(
             onTap: () {
@@ -294,7 +315,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
               height: 50.0,
               width: MediaQuery.of(context).size.width - 50.0,
               child: TextFormField(
-                style: TextStyle(fontSize: 25.0, color: Colors.white),
+                style: TextStyle(fontSize: 25.0, color: Colors.black),
                 textAlign: TextAlign.center,
                 enabled: false,
                 keyboardType: TextInputType.text,
@@ -306,6 +327,53 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             ),
           ),
           SizedBox(height: 10),
+           Text(
+            'List Name',
+            style: TextStyle(color: Colors.black, fontSize: 24.0),
+          ),
+          Expanded(
+            child: Container(
+              height: 50.0,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: lists.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 20.0,
+                          ),
+                          Container(
+                            height: 50.0,
+                            width: 100.0,
+                            child: Center(
+                                child: Text(
+                              lists[index].listName,
+                              style: TextStyle(
+                                  color: selectedIndex == index ? Colors.white : Colors.black, fontSize: 16.0),
+                            )),
+                            decoration: BoxDecoration(
+                                color: selectedIndex == index
+                                    ? Colors.red
+                                    : Colors.white,
+                                border: selectedIndex == index
+                                    ? Border.all(color: Colors.red)
+                                    : Border.all(color: Colors.red),
+                                borderRadius: BorderRadius.circular(10.0)),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+          ),
+          SizedBox(height: 100.0,),
         ],
       ),
     );
