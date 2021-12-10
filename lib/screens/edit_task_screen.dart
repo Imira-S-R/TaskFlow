@@ -191,7 +191,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 10.0,
+            height: 26.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

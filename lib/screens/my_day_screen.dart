@@ -43,7 +43,7 @@ class _MyDayState extends State<MyDay> {
                     refreshTasks: refreshNotes,
                   )));
         },
-        backgroundColor: Color(0xff20A39E),
+        backgroundColor: Colors.blue[700],
         child: Icon(
           Icons.add,
           color: Colors.white,

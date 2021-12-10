@@ -145,7 +145,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        elevation: 2.0,
+        elevation: 0.0,
         brightness: Brightness.dark,
         backgroundColor: Colors.blue[700],
         title: Text('Add New Task', style: TextStyle(color: Colors.white)),
@@ -153,7 +153,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       body: Column(
         children: [
           SizedBox(
-            height: 10.0,
+            height: 26.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -59,7 +59,7 @@ class _TaskvieweVStateScreen extends State<TaskViewerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff20A39E),
+      backgroundColor: Colors.blue[700],
       appBar: AppBar(
         brightness: Brightness.dark,
         elevation: 0.0,
@@ -93,7 +93,7 @@ class _TaskvieweVStateScreen extends State<TaskViewerScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    backgroundColor: Color(0xff20A39E),
+                    backgroundColor: Colors.blue[700],
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0))),
                     title: new Text(
@@ -140,7 +140,7 @@ class _TaskvieweVStateScreen extends State<TaskViewerScreen> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Color(0xff20A39E),
+        backgroundColor: Colors.blue[700],
         title: Text(
           'Tasks',
           style: TextStyle(color: Colors.white, fontSize: 20.0),

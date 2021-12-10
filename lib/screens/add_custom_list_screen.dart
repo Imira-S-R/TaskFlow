@@ -30,7 +30,7 @@ class _AddCustomListState extends State<AddCustomList> {
         appBar: AppBar(
           actions: [
             IconButton(
-              tooltip: 'Add custom list',
+                tooltip: 'Add custom list',
                 onPressed: () {
                   if (listNameController.text.length == 0) {
                   } else {
@@ -47,7 +47,7 @@ class _AddCustomListState extends State<AddCustomList> {
                   color: Colors.white,
                 ))
           ],
-          elevation: 2.0,
+          elevation: 0.0,
           brightness: Brightness.dark,
           backgroundColor: Colors.blue[700],
           title: Text(
@@ -58,7 +58,7 @@ class _AddCustomListState extends State<AddCustomList> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 26),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -77,7 +77,8 @@ class _AddCustomListState extends State<AddCustomList> {
                       hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 2.0),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),

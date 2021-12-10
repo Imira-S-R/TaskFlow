@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 10.0,
+            height: 26.0,
           ),
           HomeScreenTile(
             icon: Icons.home_outlined,

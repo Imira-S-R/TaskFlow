@@ -12,6 +12,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool sendReminders = true;
   late List<User> users = [];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -21,27 +22,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future refreshNotes() async {
+    setState(() => isLoading = true);
+
     this.users = await UserDatabase.instance.readAllNotes();
-    sendReminders = users[0].isReminderOn;
+
+    setState(() => isLoading = false);
   }
 
-  void toggleSwitch(bool value) {
-    if (sendReminders == false) {
-      setState(() {
-        sendReminders = true;
-        UserDatabase.instance
-            .update(User(id: users[0].id, isReminderOn: sendReminders));
-        print('Updated succesfully: ${sendReminders.toString()}');
-      });
-    } else {
-      setState(() {
-        sendReminders = false;
-        UserDatabase.instance
-            .update(User(id: users[0].id, isReminderOn: sendReminders));
-        print('Updated succesfully: ${sendReminders.toString()}');
-      });
-    }
-  }
+  // @override
+  // void dispose() {
+  //   UserDatabase.instance.close();
+
+  //   super.dispose();
+  // }
+
+  // void toggleSwitch(bool value) {
+  //   if (sendReminders == false) {
+  //     setState(() {
+  //       sendReminders = true;
+  //       UserDatabase.instance
+  //           .update(User(id: users[0].id, isReminderOn: sendReminders));
+  //       print('Updated succesfully: ${sendReminders.toString()}');
+  //     });
+  //   } else {
+  //     setState(() {
+  //       sendReminders = false;
+  //       UserDatabase.instance
+  //           .update(User(id: users[0].id, isReminderOn: sendReminders));
+  //       print('Updated succesfully: ${sendReminders.toString()}');
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +81,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10.0,),
+            SizedBox(
+              height: 26.0,
+            ),
             Text(
               'General',
               style: TextStyle(color: Colors.black, fontSize: 15.0),
-            ),
-            SizedBox(
-              height: 10.0,
             ),
             Row(
               children: [
@@ -88,43 +98,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(
                   width: 10.0,
                 ),
-                // Switch(
-                //   onChanged: toggleSwitch,
-                //   value: sendReminders,
-                //   activeColor: Colors.green,
-                //   activeTrackColor: Colors.green[600],
-                //   inactiveThumbColor: Colors.redAccent,
-                //   inactiveTrackColor: Colors.red,
-                // ),
-              ],
-            ),
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      UserDatabase.instance
-                          .update(User(id: users[0].id, isReminderOn: true));
-                    });
-                  },
-                  child: Text('Yes'),
-                  style: TextButton.styleFrom(
-                      backgroundColor: Colors.red, primary: Colors.white),
-                ),
-                SizedBox(
-                  width: 6.0,
-                ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      UserDatabase.instance
-                          .update(User(id: users[0].id, isReminderOn: false));
-                    });
-                  },
-                  child: Text('No'),
-                  style: TextButton.styleFrom(
-                      backgroundColor: Colors.red, primary: Colors.white),
-                ),
+                Switch(
+                      value: users[0].isReminderOn,
+                      onChanged: (value) {
+                        setState(() {
+                          UserDatabase.instance.update(User(
+                              isReminderOn: value,
+                              id: users[0].id));
+                          refreshNotes();
+                        });
+                      },
+                      activeTrackColor: Colors.green[500],
+                      activeColor: Colors.white,
+                    ),
               ],
             ),
             Text(

@@ -54,7 +54,7 @@ class _CustomListScreenState extends State<CustomListScreen> {
                       refreshTasks: refreshNotes,
                     )));
           },
-          backgroundColor: Color(0xff20A39E),
+          backgroundColor: Colors.blue[700],
           child: Icon(
             Icons.add,
             size: 30.0,
