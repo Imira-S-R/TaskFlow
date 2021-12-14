@@ -5,6 +5,9 @@
     ⭐️ Free & Open Source To-Do App ⭐️ <br>
 </h1>
 
+## Download
+You can download TaskFlow from the [Samsung Galaxy Store.](https://galaxystore.samsung.com/detail/com.imirasr.taskflow)
+
 ## Features
 - The whole app is FREE, you can add unlimited number of tasks and there are NO ADS.
 - The app is FAST so that you can run this app on any device.
